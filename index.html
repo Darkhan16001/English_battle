@@ -1,0 +1,1748 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Battle | College Edition</title>
+
+<style>
+:root {
+  --bg: #080e21;
+  --panel: #141e3b;
+  --panel2: #1b2a4b;
+  --text: #f5f8ff;
+  --muted: #a8b7d5;
+  --cyan: #37e7dc;
+  --pink: #ff70b0;
+  --gold: #ffcf60;
+  --green: #4be6a5;
+  --red: #ff6e82;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 20% 0%, #173c61 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 80%, #382353 0%, transparent 45%),
+    var(--bg);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.app {
+  width: min(1160px, 96%);
+  margin: auto;
+  padding: 25px 0 50px;
+}
+
+.logo {
+  color: var(--cyan);
+  font-weight: 900;
+  letter-spacing: 3px;
+  font-size: 15px;
+}
+
+h1 {
+  font-size: clamp(30px, 5vw, 62px);
+  margin: 15px 0;
+}
+
+h2 {
+  font-size: clamp(24px, 3vw, 35px);
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.panel {
+  border: 1px solid #344668;
+  border-radius: 26px;
+  padding: clamp(20px, 4vw, 40px);
+  background: rgba(20, 30, 59, 0.94);
+  box-shadow: 0 20px 70px #0005;
+}
+
+.center {
+  text-align: center;
+}
+
+.hero-icon {
+  font-size: 65px;
+}
+
+.gradient {
+  background: linear-gradient(90deg, var(--cyan), #8aafff, var(--pink));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.primary {
+  color: #071328;
+  font-weight: 900;
+  border: 0;
+  border-radius: 15px;
+  padding: 17px 30px;
+  background: linear-gradient(120deg, var(--cyan), #72aaff);
+}
+
+.secondary {
+  background: #27385a;
+  color: white;
+  border: 1px solid #425a80;
+  padding: 12px 18px;
+  border-radius: 12px;
+}
+
+.danger {
+  border: 1px solid #844656;
+  background: #472a3b;
+  color: #ffafbd;
+  border-radius: 12px;
+  padding: 12px 18px;
+}
+
+.teams-setup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.team-edit {
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--panel2);
+  border: 1px solid #3a4b70;
+}
+
+.team-edit .emoji {
+  font-size: 35px;
+}
+
+.team-edit label {
+  display: block;
+  margin: 12px 0;
+  font-weight: 700;
+}
+
+.team-edit input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  background: #101a32;
+  color: white;
+  border: 1px solid #526589;
+  outline: none;
+}
+
+.team-edit input:focus {
+  border-color: var(--cyan);
+}
+
+.rules {
+  padding: 18px;
+  border-radius: 16px;
+  background: #0d1831;
+  color: #b9c9e7;
+  line-height: 1.9;
+  margin: 25px 0;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.top-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.scorecard {
+  padding: 20px 12px;
+  border-radius: 20px;
+  text-align: center;
+  background: var(--panel);
+  border: 2px solid #344260;
+  transition: 0.3s;
+}
+
+.scorecard.active {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px #37e7dc24;
+}
+
+.scorecard.team-0.active {
+  border-color: var(--cyan);
+}
+
+.scorecard.team-1.active {
+  border-color: var(--pink);
+}
+
+.scorecard.team-2.active {
+  border-color: var(--gold);
+}
+
+.score-name {
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.score-number {
+  font-size: clamp(30px, 5vw, 55px);
+  font-weight: 950;
+  margin: 9px 0;
+}
+
+.team-0 .score-number {
+  color: var(--cyan);
+}
+
+.team-1 .score-number {
+  color: var(--pink);
+}
+
+.team-2 .score-number {
+  color: var(--gold);
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.arena {
+  position: relative;
+  overflow: hidden;
+}
+
+.arena::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--pink), var(--gold));
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.round-tag {
+  color: var(--cyan);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+  border-radius: 20px;
+  background: #2b3a59;
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--pink));
+  transition: 0.4s;
+}
+
+.question-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.turn-box {
+  background: #233457;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.timer {
+  --percent: 100%;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--cyan) var(--percent),
+    #2b3b5d 0
+  );
+  display: grid;
+  place-items: center;
+}
+
+.timer-inner {
+  background: #14213c;
+  width: 77px;
+  height: 77px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.timer-value {
+  font-size: 32px;
+  font-weight: 950;
+}
+
+.timer.danger-time {
+  background: conic-gradient(
+    var(--red) var(--percent),
+    #2b3b5d 0
+  );
+}
+
+.question-title {
+  font-size: clamp(23px, 3.2vw, 38px);
+  line-height: 1.4;
+  margin: 28px 0;
+  min-height: 70px;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.answer-btn {
+  background: #20304f;
+  color: white;
+  border: 2px solid #3d5175;
+  padding: 20px;
+  min-height: 80px;
+  border-radius: 18px;
+  text-align: left;
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 21px);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.answer-btn:hover:not(:disabled) {
+  border-color: var(--cyan);
+  background: #2a4268;
+}
+
+.letter {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #3b527b;
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+.answer-btn.correct {
+  border-color: var(--green);
+  background: #17463d;
+}
+
+.answer-btn.wrong {
+  border-color: var(--red);
+  background: #4a253b;
+}
+
+.word-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 22px 0;
+}
+
+.tile {
+  width: 45px;
+  height: 50px;
+  border-radius: 11px;
+  background: #2c4165;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-size: 26px;
+  font-weight: 900;
+  border: 1px solid #53688e;
+}
+
+.answer-input {
+  display: block;
+  width: min(600px, 100%);
+  padding: 20px;
+  border-radius: 15px;
+  background: #0d1931;
+  color: white;
+  border: 2px solid #526589;
+  outline: none;
+  font-size: 22px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.answer-input:focus {
+  border-color: var(--cyan);
+}
+
+.feedback {
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 24px;
+  line-height: 1.7;
+}
+
+.feedback.success {
+  background: #17483d;
+  border: 1px solid #299f78;
+}
+
+.feedback.failure {
+  background: #3b2b3e;
+  border: 1px solid #a66b8b;
+}
+
+.feedback-title {
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.feedback p {
+  margin: 8px 0 0;
+  color: #e2eaf6;
+}
+
+.action-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.round-description {
+  margin: 8px 0 0;
+  color: #a9bbdb;
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 25px 0;
+}
+
+.podium-card {
+  background: #20304f;
+  border: 1px solid #42587e;
+  padding: 25px 12px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.podium-card:first-child {
+  border-color: var(--gold);
+  background: #493d2b;
+}
+
+.podium-place {
+  font-size: 38px;
+}
+
+.podium-points {
+  font-size: 32px;
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #8095b9;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 700px) {
+  .teams-setup,
+  .scoreboard,
+  .podium {
+    grid-template-columns: 1fr;
+  }
+
+  .answers {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreboard {
+    gap: 8px;
+  }
+
+  .scorecard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+  }
+
+  .score-number {
+    margin: 0;
+    font-size: 28px;
+  }
+
+  .scorecard .small {
+    display: none;
+  }
+
+  .panel {
+    border-radius: 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- БАСТЫ БЕТ -->
+<section id="setup" class="panel center">
+
+  <div class="hero-icon">🏆</div>
+  <div class="logo">COLLEGE ENGLISH CHALLENGE</div>
+
+  <h1 class="gradient">ENGLISH BATTLE</h1>
+
+  <h2>3 команда. 4 кезең. 1 жеңімпаз!</h2>
+
+  <p>
+    Ағылшын тілін қызықты ойын арқылы үйрен!
+    Біліміңді тексер, командаңмен жарыс,
+    ең көп ұпай жинап, чемпион атан!
+  </p>
+
+  <div class="teams-setup">
+
+    <div class="team-edit">
+      <div class="emoji">🦅</div>
+      <label for="team1">1-команда</label>
+      <input id="team1" value="Eagles" maxlength="20">
+    </div>
+
+    <div class="team-edit">
+      <div class="emoji">⚡</div>
+      <label for="team2">2-команда</label>
+      <input id="team2" value="Thunder" maxlength="20">
+    </div>
+
+    <div class="team-edit">
+      <div class="emoji">🚀</div>
+      <label for="team3">3-команда</label>
+      <input id="team3" value="Galaxy" maxlength="20">
+    </div>
+
+  </div>
+
+  <div class="rules">
+    <b>🎮 Ойын ережелері</b>
+    <div>🧠 1-кезең — Жылдам сұрақтар: 100 ұпай</div>
+    <div>🔤 2-кезең — Сөз құрастыру: 200 ұпай</div>
+    <div>🎭 3-кезең — Өмірлік жағдаяттар: 300 ұпай</div>
+    <div>🔥 4-кезең — Финалдық сынақ: 400 ұпай</div>
+    <div>⏱ Әр тапсырмаға 30–45 секунд беріледі.</div>
+    <div>🏆 Әр командаға 12 тапсырма беріледі.</div>
+  </div>
+
+  <button id="startBtn" class="primary">
+    🚀 ОЙЫНДЫ БАСТАУ
+  </button>
+
+  <button id="continueBtn" class="secondary hidden">
+    ▶ Сақталған ойынды жалғастыру
+  </button>
+
+</section>
+
+
+<!-- ОЙЫН ЭКРАНЫ -->
+<section id="game" class="hidden">
+
+  <header class="topbar">
+    <div>
+      <div class="logo">⚡ ENGLISH BATTLE</div>
+      <div class="small">COLLEGE EDITION</div>
+    </div>
+
+    <div class="top-actions">
+      <button id="fullscreenBtn" class="secondary">
+        ⛶ Толық экран
+      </button>
+
+      <button id="resetBtn" class="danger">
+        ↻ Қайта бастау
+      </button>
+    </div>
+  </header>
+
+  <div id="scoreboard" class="scoreboard"></div>
+
+  <main class="panel arena">
+
+    <div class="meta">
+      <span id="roundTag" class="round-tag"></span>
+      <span id="questionCounter" class="small"></span>
+    </div>
+
+    <div class="progress-track">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+
+    <p id="roundDescription" class="round-description"></p>
+
+    <div class="question-top">
+      <div id="turnBox" class="turn-box"></div>
+
+      <div id="timerRing" class="timer">
+        <div class="timer-inner">
+          <span id="timerValue" class="timer-value">30</span>
+          <span class="small">секунд</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="questionTitle" class="question-title"></h2>
+
+    <div id="wordTiles" class="word-tiles hidden"></div>
+
+    <div id="answerArea"></div>
+
+    <div id="feedback" class="feedback hidden">
+      <div id="feedbackTitle" class="feedback-title"></div>
+      <p id="feedbackText"></p>
+    </div>
+
+    <div class="action-row">
+
+      <button id="checkBtn" class="primary hidden">
+        ✓ ЖАУАПТЫ ТЕКСЕРУ
+      </button>
+
+      <button id="nextBtn" class="primary hidden">
+        КЕЛЕСІ СҰРАҚ →
+      </button>
+
+      <button id="pauseBtn" class="secondary">
+        ⏸ Уақытты тоқтату
+      </button>
+
+    </div>
+
+  </main>
+
+  <div class="footer">MADE FOR COLLEGE STUDENTS • ENGLISH BATTLE</div>
+
+</section>
+
+
+<!-- ЖЕҢІМПАЗ -->
+<section id="finish" class="panel center hidden">
+
+  <div class="hero-icon">🏆</div>
+
+  <div class="logo">ENGLISH BATTLE FINISHED</div>
+
+  <h1 class="gradient">ОЙЫН АЯҚТАЛДЫ!</h1>
+
+  <h2 id="winnerTitle"></h2>
+
+  <p>
+    Барлық командаларды құттықтаймыз!
+    Бүгін сендер ағылшын тілінен білімдеріңді көрсеттіңдер.
+  </p>
+
+  <div id="podium" class="podium"></div>
+
+  <button id="restartBtn" class="primary">
+    🔄 ҚАЙТА ОЙНАУ
+  </button>
+
+</section>
+
+</div>
+
+
+<script>
+"use strict";
+
+// ==================================
+// ОЙЫН ПАРАМЕТРЛЕРІ
+// ==================================
+
+const STORAGE_KEY = "english_battle_college_v1";
+
+const rounds = [
+  {
+    name: "ЖЫЛДАМ СҰРАҚТАР",
+    description: "Дұрыс жауапты төрт нұсқаның ішінен таңдаңыз.",
+    points: 100,
+    time: 30
+  },
+  {
+    name: "СӨЗ ҚҰРАСТЫРУ",
+    description: "Шашылған әріптерді реттеп, ағылшын сөзін жазыңыз.",
+    points: 200,
+    time: 40
+  },
+  {
+    name: "ӨМІРЛІК ЖАҒДАЯТТАР",
+    description: "Берілген жағдайға сәйкес дұрыс ағылшын сөйлемін таңдаңыз.",
+    points: 300,
+    time: 30
+  },
+  {
+    name: "ФИНАЛДЫҚ СЫНАҚ",
+    description: "Бос орынға тиісті ағылшын сөзін өзіңіз жазыңыз.",
+    points: 400,
+    time: 45
+  }
+];
+
+// ==================================
+// 36 ТАПСЫРМА
+// Барлық түсіндірмелер қазақ тілінде.
+// ==================================
+
+const questions = [
+
+  // 1-КЕЗЕҢ: 9 СҰРАҚ
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "«Мен күн сайын ағылшын тілін үйренемін» сөйлемінің дұрыс аудармасын таңдаңыз.",
+    options: [
+      "I learn English every day.",
+      "I learned English tomorrow.",
+      "I am English every day.",
+      "I learning English yesterday."
+    ],
+    answer: 0,
+    explain: "Present Simple күнделікті қайталанатын әрекеттерді білдіреді."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Бос орынға дұрыс сөзді таңдаңыз: She ___ to college every morning.",
+    options: ["go", "going", "goes", "gone"],
+    answer: 2,
+    explain: "Present Simple шағында she, he, it есімдіктерінен кейін етістікке -s немесе -es жалғанады."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "«Қымбат» сөзінің ағылшынша баламасын табыңыз.",
+    options: ["Cheap", "Expensive", "Small", "Easy"],
+    answer: 1,
+    explain: "Expensive — қымбат. Cheap — арзан."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Өткен шаққа сәйкес сөзді таңдаңыз: Yesterday we ___ a new film.",
+    options: ["watch", "watches", "watching", "watched"],
+    answer: 3,
+    explain: "Yesterday өткен шақты білдіреді. Watch етістігінің Past Simple түрі — watched."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "«Ауа райы қандай?» деген сұрақты ағылшынша қалай қоямыз?",
+    options: [
+      "What is your name?",
+      "Where is the weather?",
+      "What's the weather like?",
+      "How many weather?"
+    ],
+    answer: 2,
+    explain: "What's the weather like? — Ауа райы қандай?"
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Бос орынға тиісті сөзді таңдаңыз: I have lived here ___ 2022.",
+    options: ["for", "since", "at", "during"],
+    answer: 1,
+    explain: "Since — әрекеттің басталған нақты уақытын, for — уақыт ұзақтығын білдіреді."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Сөйлемді толықтырыңыз: Can you ___ me with this task?",
+    options: ["help", "helps", "helped", "helping"],
+    answer: 0,
+    explain: "Can модаль етістігінен кейін негізгі етістік бастапқы түрінде келеді."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Child сөзінің дұрыс көпше түрін таңдаңыз.",
+    options: ["Childs", "Childes", "Childrens", "Children"],
+    answer: 3,
+    explain: "Child — бала, children — балалар. Бұл — ерекше көпше түр."
+  },
+
+  {
+    round: 0,
+    type: "choice",
+    prompt: "Болашақ шаққа сәйкес дұрыс жауапты таңдаңыз: If it rains, we ___ at home.",
+    options: ["stayed", "staying", "will stay", "stays"],
+    answer: 2,
+    explain: "First Conditional құрылымында if + Present Simple, одан кейін will + етістік қолданылады."
+  },
+
+
+  // 2-КЕЗЕҢ: 9 СӨЗ
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Кітапхана» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "library",
+    explain: "Library — кітапхана."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Мұғалім» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "teacher",
+    explain: "Teacher — мұғалім."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Саяхат» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "travel",
+    explain: "Travel — саяхат немесе саяхаттау."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Дос» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "friend",
+    explain: "Friend — дос, friendship — достық."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Таңғы ас» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "breakfast",
+    explain: "Breakfast — таңғы ас."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Сұрақ» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "question",
+    explain: "Question — сұрақ, answer — жауап."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Қоршаған орта» тіркесінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "environment",
+    explain: "Environment — қоршаған орта."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Дағды» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "skill",
+    explain: "Skill — дағды немесе қабілет."
+  },
+
+  {
+    round: 1,
+    type: "word",
+    prompt: "«Арман» сөзінің ағылшынша аудармасын құрастырыңыз.",
+    answer: "dream",
+    explain: "Dream — арман немесе түс."
+  },
+
+
+  // 3-КЕЗЕҢ: 9 ЖАҒДАЯТ
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз кітапханаға бардыңыз. Кітапты сыпайы түрде қалай сұрайсыз?",
+    options: [
+      "Give book now!",
+      "Could I borrow this book, please?",
+      "I am a book.",
+      "Where you reading?"
+    ],
+    answer: 1,
+    explain: "Could I ... please? — сыпайы өтініш жасауға арналған құрылым."
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз кафеде отырсыз. Бір стақан суға қалай тапсырыс бересіз?",
+    options: [
+      "I water tomorrow.",
+      "Water is yesterday.",
+      "I don't water.",
+      "Could I have a glass of water, please?"
+    ],
+    answer: 3,
+    explain: "Could I have ...? — бір нәрсеге сыпайы тапсырыс беру тәсілі."
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз сабаққа кешігіп келдіңіз. Мұғалімнен кіруге қалай рұқсат сұрайсыз?",
+    options: [
+      "Sorry I'm late. May I come in?",
+      "I am late, you go.",
+      "Why are you school?",
+      "I tomorrow lesson."
+    ],
+    answer: 0,
+    explain: "May I come in? — Кіруге рұқсат па?"
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз жаңа студентпен таныстыңыз. Не деп айтасыз?",
+    options: [
+      "Good night forever!",
+      "I am not college.",
+      "Nice to meet you!",
+      "Where is my yesterday?"
+    ],
+    answer: 2,
+    explain: "Nice to meet you! — Танысқаныма қуаныштымын!"
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Досыңыз жарыста жеңіске жетті. Оны қалай құттықтайсыз?",
+    options: [
+      "I'm sorry for your loss.",
+      "Congratulations!",
+      "Get well soon!",
+      "Be quiet!"
+    ],
+    answer: 1,
+    explain: "Congratulations! — Құттықтаймын!"
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз бейтаныс қаланың орталығында тұрсыз. Вокзалға баратын жолды қалай сұрайсыз?",
+    options: [
+      "Excuse me, how can I get to the station?",
+      "I can station yesterday.",
+      "The station is eating.",
+      "Do you have station time?"
+    ],
+    answer: 0,
+    explain: "How can I get to ...? — Белгілі бір жерге қалай баруға болатынын сұрайды."
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Мұғалімнің сөзін түсінбей қалдыңыз. Қайта айтуын қалай сұрайсыз?",
+    options: [
+      "I don't speak you.",
+      "You must go!",
+      "Never say this.",
+      "Could you repeat that, please?"
+    ],
+    answer: 3,
+    explain: "Could you repeat that, please? — Қайталап айта аласыз ба?"
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Досыңыз қатты шаршады. Оған қандай кеңес бересіз?",
+    options: [
+      "You should run all night.",
+      "You must never sleep.",
+      "You should get some rest.",
+      "You are yesterday."
+    ],
+    answer: 2,
+    explain: "Should — кеңес беру үшін қолданылады."
+  },
+
+  {
+    round: 2,
+    type: "choice",
+    prompt: "Сіз досыңызды колледждегі іс-шараға шақырғыңыз келеді. Қалай айтасыз?",
+    options: [
+      "Would you like to join us?",
+      "Why you never college?",
+      "You are our yesterday.",
+      "Would you like to go yesterday?"
+    ],
+    answer: 0,
+    explain: "Would you like to ...? — біреуді сыпайы шақыруға арналған құрылым."
+  },
+
+
+  // 4-КЕЗЕҢ: 9 ФИНАЛДЫҚ СҰРАҚ
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Екінші шартты сөйлемдегі бос орынға тиісті сөзді жазыңыз: If I ___ more time, I would learn Spanish.",
+    answer: "had",
+    explain: "Second Conditional: If + Past Simple, would + етістік."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Present Perfect шағына сәйкес сөзді жазыңыз: I have never ___ to London.",
+    answer: "been",
+    explain: "Have been to — бір жерге барып көрген тәжірибені білдіреді."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "«Шамды өшіру» мағынасындағы тіркесті толықтырыңыз: Please turn ___ the lights.",
+    answer: "off",
+    explain: "Turn off — өшіру, turn on — қосу."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Тиісті шылауды жазыңыз: He is interested ___ technology.",
+    answer: "in",
+    explain: "Be interested in — бір нәрсеге қызығушылық таныту."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Сөйлемді дұрыс толықтырыңыз: Neither of them ___ ready.",
+    answer: "is",
+    explain: "Neither of them бастауышы ресми ағылшын тілінде жекеше етістікпен қолданылады."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Грамматикалық дұрыс сөзді жазыңыз: I look forward to ___ from you.",
+    answer: "hearing",
+    explain: "Look forward to тіркесінен кейін етістіктің -ing түрі қолданылады."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Уақыт ұзақтығын білдіретін сөзді жазыңыз: She has been studying ___ two hours.",
+    answer: "for",
+    explain: "For — уақыт ұзақтығын, since — басталған сәтті білдіреді."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Күшейтпелі шырайды толықтырыңыз: This is the ___ interesting book I've read.",
+    answer: "most",
+    explain: "Көп буынды сын есімдердің күшейтпелі шырайында the most қолданылады."
+  },
+
+  {
+    round: 3,
+    type: "fill",
+    prompt: "Past Perfect шағына сәйкес көмекші етістікті жазыңыз: By the time we arrived, the film ___ started.",
+    answer: "had",
+    explain: "Past Perfect өткен шақтағы басқа әрекеттен бұрын болған оқиғаны білдіреді."
+  }
+
+];
+
+// ==================================
+// ОЙЫН КҮЙІ
+// ==================================
+
+let state = null;
+let timerId = null;
+
+function makeState() {
+  return {
+    status: "game",
+    teams: [
+      document.getElementById("team1").value.trim() || "Eagles",
+      document.getElementById("team2").value.trim() || "Thunder",
+      document.getElementById("team3").value.trim() || "Galaxy"
+    ],
+    scores: [0, 0, 0],
+    index: 0,
+    answered: false,
+    outcome: null,
+    selected: null,
+    remaining: rounds[0].time,
+    paused: false
+  };
+}
+
+function saveGame() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn("Ойын сақталмады:", error);
+  }
+}
+
+function loadGame() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    if (
+      saved &&
+      Array.isArray(saved.teams) &&
+      saved.teams.length === 3 &&
+      Array.isArray(saved.scores) &&
+      saved.scores.length === 3 &&
+      Number.isInteger(saved.index) &&
+      saved.index >= 0 &&
+      saved.index <= questions.length
+    ) {
+      return saved;
+    }
+  } catch (error) {
+    console.warn("Сақталған ойын оқылмады:", error);
+  }
+
+  return null;
+}
+
+function showScreen(id) {
+  ["setup", "game", "finish"].forEach(screen => {
+    document.getElementById(screen).classList.toggle(
+      "hidden",
+      screen !== id
+    );
+  });
+}
+
+function startGame() {
+  state = makeState();
+  saveGame();
+  renderGame();
+}
+
+function resumeGame() {
+  const saved = loadGame();
+
+  if (!saved) return;
+
+  state = saved;
+
+  if (state.status === "finished") {
+    renderFinish();
+  } else {
+    renderGame();
+  }
+}
+
+// ==================================
+// ҰПАЙ КЕСТЕСІ
+// ==================================
+
+function renderScores() {
+  const board = document.getElementById("scoreboard");
+  board.innerHTML = "";
+
+  const activeTeam = state.index % 3;
+
+  state.teams.forEach((name, i) => {
+    const card = document.createElement("div");
+    card.className = "scorecard team-" + i;
+
+    if (i === activeTeam) {
+      card.classList.add("active");
+    }
+
+    const title = document.createElement("div");
+    title.className = "score-name";
+    title.textContent = ["🦅 ", "⚡ ", "🚀 "][i] + name;
+
+    const score = document.createElement("div");
+    score.className = "score-number";
+    score.textContent = state.scores[i];
+
+    const subtitle = document.createElement("div");
+    subtitle.className = "small";
+    subtitle.textContent = i === activeTeam
+      ? "🎯 Қазір жауап береді"
+      : "Жиналған ұпай";
+
+    card.append(title, score, subtitle);
+    board.appendChild(card);
+  });
+}
+
+// ==================================
+// СӨЗДІҢ ӘРІПТЕРІН АРАЛАСТЫРУ
+// ==================================
+
+function scrambleWord(word) {
+  return word.toUpperCase().split("").reverse();
+}
+
+function renderWordTiles(word) {
+  const box = document.getElementById("wordTiles");
+
+  box.innerHTML = "";
+  box.classList.remove("hidden");
+
+  scrambleWord(word).forEach(letter => {
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.textContent = letter;
+    box.appendChild(tile);
+  });
+}
+
+// ==================================
+// СҰРАҚТЫ КӨРСЕТУ
+// ==================================
+
+function renderGame() {
+  clearInterval(timerId);
+
+  if (state.index >= questions.length) {
+    renderFinish();
+    return;
+  }
+
+  state.status = "game";
+  showScreen("game");
+
+  const q = questions[state.index];
+  const round = rounds[q.round];
+  const teamIndex = state.index % 3;
+
+  renderScores();
+
+  document.getElementById("roundTag").textContent =
+    (q.round + 1) + "-КЕЗЕҢ • " + round.name;
+
+  document.getElementById("questionCounter").textContent =
+    "Сұрақ " + (state.index + 1) + " / " + questions.length;
+
+  document.getElementById("progressFill").style.width =
+    ((state.index + (state.answered ? 1 : 0)) / questions.length * 100) + "%";
+
+  document.getElementById("roundDescription").textContent =
+    round.description;
+
+  document.getElementById("turnBox").textContent =
+    "🎯 " + state.teams[teamIndex] + " командасының кезегі";
+
+  document.getElementById("questionTitle").textContent = q.prompt;
+
+  document.getElementById("wordTiles").classList.add("hidden");
+
+  const area = document.getElementById("answerArea");
+  area.innerHTML = "";
+
+  if (q.type === "choice") {
+    renderChoices(q, area);
+  } else {
+    renderTextAnswer(q, area);
+  }
+
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("checkBtn").classList.add("hidden");
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  document.getElementById("pauseBtn").classList.toggle(
+    "hidden",
+    state.answered
+  );
+
+  updatePauseButton();
+
+  if (state.answered) {
+    showFeedback(q);
+    document.getElementById("nextBtn").classList.remove("hidden");
+  } else {
+    if (q.type !== "choice") {
+      document.getElementById("checkBtn").classList.remove("hidden");
+    }
+
+    startTimer();
+  }
+
+  updateTimer();
+  saveGame();
+}
+
+// ==================================
+// ТӨРТ НҰСҚАДАН ТАҢДАУ
+// ==================================
+
+function renderChoices(q, area) {
+  const grid = document.createElement("div");
+  grid.className = "answers";
+
+  q.options.forEach((option, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "answer-btn";
+
+    const letter = document.createElement("span");
+    letter.className = "letter";
+    letter.textContent = ["A", "B", "C", "D"][i];
+
+    const text = document.createElement("span");
+    text.textContent = option;
+
+    btn.append(letter, text);
+
+    if (state.answered) {
+      btn.disabled = true;
+
+      if (i === q.answer) {
+        btn.classList.add("correct");
+      }
+
+      if (i === state.selected && i !== q.answer) {
+        btn.classList.add("wrong");
+      }
+    } else {
+      btn.addEventListener("click", () => submitChoice(i));
+    }
+
+    grid.appendChild(btn);
+  });
+
+  area.appendChild(grid);
+}
+
+function submitChoice(selected) {
+  if (state.answered || state.paused) return;
+
+  const q = questions[state.index];
+  const correct = selected === q.answer;
+
+  finishQuestion(correct ? "correct" : "wrong", selected);
+}
+
+// ==================================
+// ЖАЗБАША ЖАУАП
+// ==================================
+
+function renderTextAnswer(q, area) {
+  if (q.type === "word") {
+    renderWordTiles(q.answer);
+  }
+
+  const input = document.createElement("input");
+  input.id = "answerInput";
+  input.className = "answer-input";
+  input.type = "text";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+  input.placeholder = "Жауапты ағылшынша жазыңыз";
+
+  if (state.answered) {
+    input.value = state.selected || "";
+    input.disabled = true;
+  } else {
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        submitTextAnswer();
+      }
+    });
+  }
+
+  area.appendChild(input);
+}
+
+function normalizeAnswer(value) {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
+
+function submitTextAnswer() {
+  if (state.answered || state.paused) return;
+
+  const input = document.getElementById("answerInput");
+  const entered = input.value.trim();
+
+  if (!entered) {
+    input.focus();
+    return;
+  }
+
+  const q = questions[state.index];
+
+  const correct =
+    normalizeAnswer(entered) === normalizeAnswer(q.answer);
+
+  finishQuestion(correct ? "correct" : "wrong", entered);
+}
+
+// ==================================
+// ЖАУАПТЫ ТЕКСЕРУ ЖӘНЕ ҰПАЙ БЕРУ
+// ==================================
+
+function finishQuestion(outcome, selected = null) {
+  if (state.answered) return;
+
+  clearInterval(timerId);
+
+  state.answered = true;
+  state.paused = false;
+  state.outcome = outcome;
+  state.selected = selected;
+
+  const q = questions[state.index];
+  const teamIndex = state.index % 3;
+
+  if (outcome === "correct") {
+    state.scores[teamIndex] += rounds[q.round].points;
+  }
+
+  saveGame();
+  renderGame();
+}
+
+function showFeedback(q) {
+  const box = document.getElementById("feedback");
+  const title = document.getElementById("feedbackTitle");
+  const text = document.getElementById("feedbackText");
+
+  box.classList.remove("hidden", "success", "failure");
+
+  let correctAnswer;
+
+  if (q.type === "choice") {
+    correctAnswer = q.options[q.answer];
+  } else {
+    correctAnswer = q.answer.toUpperCase();
+  }
+
+  if (state.outcome === "correct") {
+    box.classList.add("success");
+    title.textContent =
+      "✅ ДҰРЫС! +" + rounds[q.round].points + " ҰПАЙ!";
+  } else {
+    box.classList.add("failure");
+    title.textContent = state.outcome === "timeout"
+      ? "⏰ УАҚЫТ АЯҚТАЛДЫ!"
+      : "❌ ҚАТЕ ЖАУАП!";
+  }
+
+  text.textContent =
+    "Дұрыс жауап: " + correctAnswer + ". " + q.explain;
+}
+
+// ==================================
+// ТАЙМЕР
+// ==================================
+
+function startTimer() {
+  clearInterval(timerId);
+
+  timerId = setInterval(() => {
+    if (!state || state.paused || state.answered) return;
+
+    state.remaining = Math.max(0, state.remaining - 1);
+
+    updateTimer();
+    saveGame();
+
+    if (state.remaining <= 0) {
+      finishQuestion("timeout");
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const q = questions[state.index];
+  if (!q) return;
+
+  const total = rounds[q.round].time;
+  const remaining = Math.max(0, state.remaining);
+
+  document.getElementById("timerValue").textContent = remaining;
+
+  const ring = document.getElementById("timerRing");
+
+  ring.style.setProperty(
+    "--percent",
+    (remaining / total * 100) + "%"
+  );
+
+  ring.classList.toggle("danger-time", remaining <= 10);
+}
+
+function togglePause() {
+  if (!state || state.answered) return;
+
+  state.paused = !state.paused;
+  updatePauseButton();
+  saveGame();
+}
+
+function updatePauseButton() {
+  document.getElementById("pauseBtn").textContent = state.paused
+    ? "▶ Уақытты жалғастыру"
+    : "⏸ Уақытты тоқтату";
+}
+
+// ==================================
+// КЕЛЕСІ СҰРАҚ
+// ==================================
+
+function nextQuestion() {
+  if (!state.answered) return;
+
+  state.index++;
+
+  if (state.index >= questions.length) {
+    renderFinish();
+    return;
+  }
+
+  const q = questions[state.index];
+
+  state.answered = false;
+  state.outcome = null;
+  state.selected = null;
+  state.remaining = rounds[q.round].time;
+  state.paused = false;
+
+  saveGame();
+  renderGame();
+}
+
+// ==================================
+// ЖЕҢІМПАЗДЫ АНЫҚТАУ
+// ==================================
+
+function renderFinish() {
+  clearInterval(timerId);
+
+  state.status = "finished";
+  saveGame();
+  showScreen("finish");
+
+  const results = state.teams.map((name, i) => ({
+    name,
+    score: state.scores[i]
+  }));
+
+  results.sort((a, b) => b.score - a.score);
+
+  const maxScore = results[0].score;
+
+  const winners = results
+    .filter(team => team.score === maxScore)
+    .map(team => team.name);
+
+  document.getElementById("winnerTitle").textContent =
+    winners.length === 1
+      ? "🥇 ЖЕҢІМПАЗ: " + winners[0]
+      : "🤝 ТЕҢ НӘТИЖЕ: " + winners.join(" және ");
+
+  const podium = document.getElementById("podium");
+  podium.innerHTML = "";
+
+  const icons = ["🥇", "🥈", "🥉"];
+
+  results.forEach((team, i) => {
+    const card = document.createElement("div");
+    card.className = "podium-card";
+
+    const place = document.createElement("div");
+    place.className = "podium-place";
+    place.textContent = icons[i];
+
+    const name = document.createElement("h2");
+    name.textContent = team.name;
+
+    const points = document.createElement("div");
+    points.className = "podium-points";
+    points.textContent = team.score;
+
+    const label = document.createElement("div");
+    label.className = "small";
+    label.textContent = "ҰПАЙ";
+
+    card.append(place, name, points, label);
+    podium.appendChild(card);
+  });
+
+  document.getElementById("progressFill").style.width = "100%";
+}
+
+// ==================================
+// БАСҚАРУ БАТЫРМАЛАРЫ
+// ==================================
+
+function resetGame() {
+  const agree = confirm(
+    "Ойынды басынан бастайсыз ба? Барлық ұпай өшіріледі."
+  );
+
+  if (!agree) return;
+
+  clearInterval(timerId);
+  localStorage.removeItem(STORAGE_KEY);
+  state = null;
+
+  document.getElementById("continueBtn")
+    .classList.add("hidden");
+
+  showScreen("setup");
+}
+
+function fullscreen() {
+  if (!document.fullscreenElement) {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen()
+        .catch(() => {});
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+
+// ==================================
+// БАТЫРМАЛАРДЫ ҚОСУ
+// ==================================
+
+document.getElementById("startBtn")
+  .addEventListener("click", startGame);
+
+document.getElementById("continueBtn")
+  .addEventListener("click", resumeGame);
+
+document.getElementById("checkBtn")
+  .addEventListener("click", submitTextAnswer);
+
+document.getElementById("nextBtn")
+  .addEventListener("click", nextQuestion);
+
+document.getElementById("pauseBtn")
+  .addEventListener("click", togglePause);
+
+document.getElementById("resetBtn")
+  .addEventListener("click", resetGame);
+
+document.getElementById("restartBtn")
+  .addEventListener("click", resetGame);
+
+document.getElementById("fullscreenBtn")
+  .addEventListener("click", fullscreen);
+
+// САҚТАЛҒАН ОЙЫНДЫ ТЕКСЕРУ
+
+const savedGame = loadGame();
+
+if (savedGame) {
+  document.getElementById("continueBtn")
+    .classList.remove("hidden");
+}
+
+</script>
+</body>
+</html>
